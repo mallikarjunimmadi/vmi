@@ -1,7 +1,11 @@
 import json
 import csv
 
-def json_to_csv(json_file, csv_file):
+def json_to_csv():
+    # Take JSON and CSV file paths as input from the user
+    json_file = input("Enter the path to the JSON file: ")
+    csv_file = input("Enter the path where you want to save the CSV file: ")
+
     # Open the JSON file and load the data
     with open(json_file, 'r') as file:
         data = json.load(file)
@@ -20,7 +24,5 @@ def json_to_csv(json_file, csv_file):
 
     print(f"Data has been written to {csv_file}.")
 
-# Example usage
-json_file = 'data.json'  # Replace with your JSON file path
-csv_file = 'data.csv'    # Replace with your desired CSV file path
-json_to_csv(json_file, csv_file)
+# Run the function
+json_to_csv()
