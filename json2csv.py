@@ -19,26 +19,32 @@ def json_to_csv():
         with open(json_file, 'r') as file:
             data = json.load(file)
 
+        # Extract the 'results' part of the JSON
+        if 'results' not in data:
+            print("Error: 'results' key not found in the JSON data.")
+            return
+
+        results = data['results']
+
+        # Check if 'results' is a list of dictionaries
+        if not isinstance(results, list):
+            print("Error: 'results' should be a list of dictionaries.")
+            return
+
         # Open the CSV file and create a writer
         with open(csv_file, 'w', newline='') as file:
             writer = csv.writer(file)
 
-            # Check if data is a list of dictionaries or a single dictionary
-            if isinstance(data, list) and data:
-                # Write header and rows if data is a list of dictionaries
-                writer.writerow(data[0].keys())
-                for item in data:
-                    writer.writerow(item.values())
-            elif isinstance(data, dict):
-                # For a single dictionary, write keys as headers and values as a single row
-                writer.writerow(data.keys())
-                writer.writerow(data.values())
+            # Write header and rows for the 'results' data
+            if results:
+                writer.writerow(results[0].keys())  # Write headers from the first dictionary
+                for item in results:
+                    writer.writerow(item.values())  # Write each row from 'results'
             else:
-                print("Unexpected JSON format. Please provide a JSON file with a list of dictionaries or a single dictionary.")
-                return
+                print("The 'results' list is empty. No data to write.")
 
-        print(f"Data has been written to {csv_file}.")
-    
+        print(f"Data from 'results' has been written to {csv_file}.")
+
     except json.JSONDecodeError:
         print("Error: The JSON file contains invalid JSON data.")
     except FileNotFoundError:
