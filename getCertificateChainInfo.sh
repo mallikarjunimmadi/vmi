@@ -3,7 +3,7 @@
 read -p "Enter certificate path (certificate.cer): " cpath
 
 log() {
-    echo "[LOG] $1"
+    echo "$1"
 }
 
 # Check if the certificate path exists
