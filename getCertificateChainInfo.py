@@ -1,17 +1,3 @@
-def print_cert_info(cert, idx):
-    # Calculate the thumbprint (SHA1 fingerprint)
-    thumbprint = hashlib.sha1(cert.tbs_certificate_bytes).hexdigest().upper()
-    logging.info(f"Certificate {idx}:")
-    logging.info(f"  Serial Number: {cert.serial_number}")
-    logging.info(f"  Subject: {cert.subject.rfc4514_string()}")
-    logging.info(f"  Issuer: {cert.issuer.rfc4514_string()}")
-    logging.info("  Validity:")
-    logging.info(f"    Not Before: {cert.not_valid_before_utc}")
-    logging.info(f"    Not After: {cert.not_valid_after_utc}")
-    logging.info(f"  Thumbprint (SHA1): {thumbprint}")
-    print("\n")
-
-
 from cryptography import x509
 from cryptography.hazmat.backends import default_backend
 import sys
