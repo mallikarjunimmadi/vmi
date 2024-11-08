@@ -1,22 +1,3 @@
-[LOG] Certificate is in PEM format. Proceeding with extraction.
-1923
-1809
-1927
-[LOG] Processing cert_00.pem
-        Validity
-
-[LOG] Processing cert_01.pem
-        Validity
-
-[LOG] Processing cert_02.pem
-        Validity
-
-[LOG] Cleaning up temporary certificate files.
-[LOG] Processing completed.
-
-
-#######################
-
 #!/bin/bash
 
 read -p "Enter certificate path (certificate.cer): " cpath
@@ -43,10 +24,7 @@ if awk '/-----BEGIN CERTIFICATE-----/ {found=1; exit} END {exit !found}' "$cpath
     # Process each PEM certificate
     for cert_file in cert_*.pem; do
         log "Processing $cert_file"
-        openssl x509 -in "$cert_file" -text -noout | \
-        grep -A2 "Serial Number\|Issuer\|Subject\|Validity" | \
-        grep -v "Public\|Identifier\|X509v3\|--\|CA Issuers\|DNS\|Signature\|Full Name\|Fingerprint\|:" | \
-        grep -v '^[[:space:]]\{16,\}'  # Filters out long indented hex sequences
+        openssl x509 -in "$cert_file" -noout -serial -issuer -subject -dates
         echo ""
     done
 
@@ -61,10 +39,7 @@ else
         log "Certificate is in DER format. Converting to PEM format."
         openssl x509 -inform der -in "$cpath" -out temp_cert.pem
         log "Processing temp_cert.pem"
-        openssl x509 -in temp_cert.pem -text -noout | \
-        grep -A2 "Serial Number\|Issuer\|Subject\|Validity" | \
-        grep -v "Public\|Identifier\|X509v3\|--\|CA Issuers\|DNS\|Signature\|Full Name\|Fingerprint\|:" | \
-        grep -v '^[[:space:]]\{16,\}'  # Filters out long indented hex sequences
+        openssl x509 -in temp_cert.pem -noout -serial -issuer -subject -dates
         echo ""
         rm temp_cert.pem
     else
