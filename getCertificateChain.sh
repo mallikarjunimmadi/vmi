@@ -1,3 +1,7 @@
+cat sbi.nbupaymentsvendorcerts.com.chained.pem
+-----BEGIN CERTIFICATE-----
+
+
 #!/bin/bash
 
 read -p "Enter certificate path (certificate.cer): " cpath
