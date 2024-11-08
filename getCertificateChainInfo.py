@@ -12,9 +12,14 @@ cert_path = input("Enter certificate path (certificate.cer): ")
 
 def print_cert_info(cert, idx):
     # Calculate the thumbprint (SHA1 fingerprint)
-    digest = hashes.Hash(hashes.SHA1(), backend=default_backend())
-    digest.update(cert.tbs_certificate_bytes)
-    thumbprint = digest.finalize().hex().upper()
+    sha1_digest = hashes.Hash(hashes.SHA1(), backend=default_backend())
+    sha1_digest.update(cert.tbs_certificate_bytes)
+    thumbprint_sha1 = sha1_digest.finalize().hex().upper()
+
+    # Calculate the thumbprint (SHA256 fingerprint)
+    sha256_digest = hashes.Hash(hashes.SHA256(), backend=default_backend())
+    sha256_digest.update(cert.tbs_certificate_bytes)
+    thumbprint_sha256 = sha256_digest.finalize().hex().upper()
 
     logging.info(f"Certificate {idx}:")
     logging.info(f"  Serial Number: {cert.serial_number}")
@@ -23,7 +28,8 @@ def print_cert_info(cert, idx):
     logging.info("  Validity:")
     logging.info(f"    Not Before: {cert.not_valid_before_utc}")
     logging.info(f"    Not After: {cert.not_valid_after_utc}")
-    logging.info(f"  Thumbprint (SHA1): {thumbprint}")
+    logging.info(f"  Thumbprint (SHA1): {thumbprint_sha1}")
+    logging.info(f"  Thumbprint (SHA256): {thumbprint_sha256}")
     print("\n")
 
 try:
