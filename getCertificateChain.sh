@@ -1,7 +1,3 @@
-cat sbi.nbupaymentsvendorcerts.com.chained.pem
------BEGIN CERTIFICATE-----
-
-
 #!/bin/bash
 
 read -p "Enter certificate path (certificate.cer): " cpath
@@ -18,8 +14,8 @@ fi
 
 log "Reading certificate from: $cpath"
 
-# Check if the certificate is in PEM format
-if grep -q "-----BEGIN CERTIFICATE-----" "$cpath"; then
+# Check if the certificate is in PEM format using awk
+if awk '/-----BEGIN CERTIFICATE-----/ {found=1; exit} END {exit !found}' "$cpath"; then
     log "Certificate is in PEM format. Proceeding with extraction."
 
     # Split PEM file into individual certificates
