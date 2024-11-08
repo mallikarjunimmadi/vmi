@@ -55,7 +55,7 @@ try:
         if b"-----BEGIN CERTIFICATE-----" in data:
             logging.info("Certificate is in PEM format. Proceeding with extraction.")
             certs = data.split(b"-----BEGIN CERTIFICATE-----")
-            for idx, cert_data in enumerate(certs, start=1):
+            for idx, cert_data in enumerate(certs, start=0):
                 if not cert_data.strip():
                     continue
                 cert_data = b"-----BEGIN CERTIFICATE-----" + cert_data
