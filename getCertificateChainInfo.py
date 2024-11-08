@@ -39,7 +39,7 @@ def print_cert_info(cert, idx):
     logging.info(f"  Serial Number: {cert.serial_number}")
     logging.info(f"  Subject: {cert.subject.rfc4514_string()}")
     logging.info(f"  Issuer: {cert.issuer.rfc4514_string()}")
-    logging.info("  Validity:")
+    logging.info("  Validity (UTC):")
     logging.info(f"    Not Before: {not_before}")
     logging.info(f"    Not After: {not_after}")
     logging.info(f"  Thumbprint (SHA1): {thumbprint_sha1}")
