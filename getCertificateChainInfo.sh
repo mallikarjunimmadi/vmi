@@ -26,6 +26,7 @@ if awk '/-----BEGIN CERTIFICATE-----/ {found=1; exit} END {exit !found}' "$cpath
     for cert_file in cert_*.pem; do
         log "Processing $cert_file"
         openssl x509 -in "$cert_file" -noout -serial -issuer -subject -dates -fingerprint
+        openssl x509 -in "$cert_file" -fingerprint -sha256
         echo ""
     done
 
@@ -41,6 +42,7 @@ else
         openssl x509 -inform der -in "$cpath" -out temp_cert.pem
         log "Processing temp_cert.pem"
         openssl x509 -in temp_cert.pem -noout -serial -issuer -subject -dates -fingerprint
+        openssl x509 -in "$cert_file" -fingerprint -sha256
         echo ""
         rm temp_cert.pem
     else
