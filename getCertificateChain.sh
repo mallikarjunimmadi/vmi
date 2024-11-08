@@ -1,13 +1,3 @@
-Enter certificate path (certificate.cer): sbi.nbupaymentsvendorcerts.com.chained.pem
-[LOG] Reading certificate from: sbi.nbupaymentsvendorcerts.com.chained.pem
-grep: unrecognized option '-----BEGIN CERTIFICATE-----'
-Usage: grep [OPTION]... PATTERNS [FILE]...
-Try 'grep --help' for more information.
-[LOG] Certificate is not in PEM format. Checking if it's in DER format.
-[LOG] The certificate format is not recognized or invalid. Exiting.
-imallikarjun@ubuntu-01:/data$
-
-
 #!/bin/bash
 
 read -p "Enter certificate path (certificate.cer): " cpath
