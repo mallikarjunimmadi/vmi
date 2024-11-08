@@ -1,3 +1,22 @@
+[LOG] Certificate is in PEM format. Proceeding with extraction.
+1923
+1809
+1927
+[LOG] Processing cert_00.pem
+        Validity
+
+[LOG] Processing cert_01.pem
+        Validity
+
+[LOG] Processing cert_02.pem
+        Validity
+
+[LOG] Cleaning up temporary certificate files.
+[LOG] Processing completed.
+
+
+#######################
+
 #!/bin/bash
 
 read -p "Enter certificate path (certificate.cer): " cpath
