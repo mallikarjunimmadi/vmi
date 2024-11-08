@@ -32,7 +32,7 @@ try:
                     continue
                 cert_data = b"-----BEGIN CERTIFICATE-----" + cert_data
                 cert = x509.load_pem_x509_certificate(cert_data, default_backend())
-                logging.info(f"Certificate {idx + 1}:")
+                logging.info(f"Certificate {idx}:")
                 print_cert_info(cert)
         else:
             logging.info("Certificate is not in PEM format. Checking if it's in DER format.")
