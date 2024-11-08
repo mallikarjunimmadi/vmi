@@ -1,15 +1,15 @@
-Enter certificate path (certificate.cer): sbi.nbupaymentsvendorcerts.com.chained.pem
-[LOG] Reading certificate from: sbi.nbupaymentsvendorcerts.com.chained.pem
+Enter certificate path (certificate.cer): nbupaymentsvendorcerts.com.chained.pem
+[LOG] Reading certificate from: nbupaymentsvendorcerts.com.chained.pem
 [LOG] Certificate is in PEM format. Proceeding with extraction.
 [LOG] Certificate 2:
 [LOG] Serial Number: 166895367321599166093099326425508225765
 [LOG] Issuer: CN=WR4,O=Google Trust Services,C=US
-[LOG] Subject: CN=sbi20241027.nbupaymentsvendorcerts.com
+[LOG] Subject: CN=20241027.nbupaymentsvendorcerts.com
 [LOG] Validity:
-c:\Users\vmw347138.CORP\OneDrive - State Bank of India\Data-CRITICAL\Scripts\getCertificateInfo.py:17: CryptographyDeprecationWarning: Properties that return a naïve datetime object have been deprecated. Please switch to not_valid_before_utc.
+c:\Users\vmw347138.CORP\OneDrive - \Data-CRITICAL\Scripts\getCertificateInfo.py:17: CryptographyDeprecationWarning: Properties that return a naïve datetime object have been deprecated. Please switch to not_valid_before_utc.
   logging.info(f"  Not Before: {cert.not_valid_before}")
 [LOG]   Not Before: 2024-10-27 07:03:23
-c:\Users\vmw347138.CORP\OneDrive - State Bank of India\Data-CRITICAL\Scripts\getCertificateInfo.py:18: CryptographyDeprecationWarning: Properties that return a naïve datetime object have been deprecated. Please switch to not_valid_after_utc.
+c:\Users\vmw347138.CORP\OneDrive - \Data-CRITICAL\Scripts\getCertificateInfo.py:18: CryptographyDeprecationWarning: Properties that return a naïve datetime object have been deprecated. Please switch to not_valid_after_utc.
   logging.info(f"  Not After: {cert.not_valid_after}")
 [LOG]   Not After: 2025-01-25 07:03:22
 
