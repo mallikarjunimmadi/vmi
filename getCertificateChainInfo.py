@@ -3,9 +3,10 @@ from cryptography.hazmat.backends import default_backend
 import sys
 import logging
 from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives import serialization
 
 # Set up logging
-logging.basicConfig(level=logging.INFO, format='[LOG] %(message)s')
+logging.basicConfig(level=logging.INFO, format='%(message)s')
 
 # Get certificate path from the user
 cert_path = input("Enter certificate path (certificate.cer): ")
@@ -13,12 +14,12 @@ cert_path = input("Enter certificate path (certificate.cer): ")
 def print_cert_info(cert, idx):
     # Calculate the thumbprint (SHA1 fingerprint)
     sha1_digest = hashes.Hash(hashes.SHA1(), backend=default_backend())
-    sha1_digest.update(cert.tbs_certificate_bytes)
+    sha1_digest.update(cert.public_bytes(encoding=serialization.Encoding.DER))
     thumbprint_sha1 = sha1_digest.finalize().hex().upper()
 
     # Calculate the thumbprint (SHA256 fingerprint)
     sha256_digest = hashes.Hash(hashes.SHA256(), backend=default_backend())
-    sha256_digest.update(cert.tbs_certificate_bytes)
+    sha256_digest.update(cert.public_bytes(encoding=serialization.Encoding.DER))
     thumbprint_sha256 = sha256_digest.finalize().hex().upper()
 
     logging.info(f"Certificate {idx}:")
@@ -41,7 +42,7 @@ try:
         if b"-----BEGIN CERTIFICATE-----" in data:
             logging.info("Certificate is in PEM format. Proceeding with extraction.")
             certs = data.split(b"-----BEGIN CERTIFICATE-----")
-            for idx, cert_data in enumerate(certs, start=1):
+            for idx, cert_data in enumerate(certs, start=0):
                 if not cert_data.strip():
                     continue
                 cert_data = b"-----BEGIN CERTIFICATE-----" + cert_data
