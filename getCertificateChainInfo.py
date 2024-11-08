@@ -11,6 +11,16 @@ logging.basicConfig(level=logging.INFO, format='%(message)s')
 # Get certificate path from the user
 cert_path = input("Enter certificate path (certificate.cer): ")
 
+def get_validity_dates(cert):
+    # Try using the `_utc` attributes, fallback to standard ones if not available
+    try:
+        not_before = cert.not_valid_before_utc
+        not_after = cert.not_valid_after_utc
+    except AttributeError:
+        not_before = cert.not_valid_before
+        not_after = cert.not_valid_after
+    return not_before, not_after
+
 def print_cert_info(cert, idx):
     # Calculate the thumbprint (SHA1 fingerprint)
     sha1_digest = hashes.Hash(hashes.SHA1(), backend=default_backend())
@@ -22,13 +32,16 @@ def print_cert_info(cert, idx):
     sha256_digest.update(cert.public_bytes(encoding=serialization.Encoding.DER))
     thumbprint_sha256 = sha256_digest.finalize().hex().upper()
 
+    # Get validity dates with cross-platform handling
+    not_before, not_after = get_validity_dates(cert)
+
     logging.info(f"Certificate {idx}:")
     logging.info(f"  Serial Number: {cert.serial_number}")
     logging.info(f"  Subject: {cert.subject.rfc4514_string()}")
     logging.info(f"  Issuer: {cert.issuer.rfc4514_string()}")
     logging.info("  Validity:")
-    logging.info(f"    Not Before: {cert.not_valid_before_utc}")
-    logging.info(f"    Not After: {cert.not_valid_after_utc}")
+    logging.info(f"    Not Before: {not_before}")
+    logging.info(f"    Not After: {not_after}")
     logging.info(f"  Thumbprint (SHA1): {thumbprint_sha1}")
     logging.info(f"  Thumbprint (SHA256): {thumbprint_sha256}")
     print("\n")
@@ -42,7 +55,7 @@ try:
         if b"-----BEGIN CERTIFICATE-----" in data:
             logging.info("Certificate is in PEM format. Proceeding with extraction.")
             certs = data.split(b"-----BEGIN CERTIFICATE-----")
-            for idx, cert_data in enumerate(certs, start=0):
+            for idx, cert_data in enumerate(certs, start=1):
                 if not cert_data.strip():
                     continue
                 cert_data = b"-----BEGIN CERTIFICATE-----" + cert_data
