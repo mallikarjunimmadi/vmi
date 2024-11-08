@@ -25,7 +25,7 @@ if awk '/-----BEGIN CERTIFICATE-----/ {found=1; exit} END {exit !found}' "$cpath
     # Process each PEM certificate
     for cert_file in cert_*.pem; do
         log "Processing $cert_file"
-        openssl x509 -in "$cert_file" -noout -serial -issuer -subject -dates
+        openssl x509 -in "$cert_file" -noout -serial -issuer -subject -dates -fingerprint
         echo ""
     done
 
@@ -40,7 +40,7 @@ else
         log "Certificate is in DER format. Converting to PEM format."
         openssl x509 -inform der -in "$cpath" -out temp_cert.pem
         log "Processing temp_cert.pem"
-        openssl x509 -in temp_cert.pem -noout -serial -issuer -subject -dates
+        openssl x509 -in temp_cert.pem -noout -serial -issuer -subject -dates -fingerprint
         echo ""
         rm temp_cert.pem
     else
